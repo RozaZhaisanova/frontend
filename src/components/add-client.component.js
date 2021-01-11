@@ -4,8 +4,10 @@ import ClientDataService from "../services/client.service";
 export default class AddClient extends Component {
   constructor(props) {
     super(props);
-    this.onChangeTitle = this.onChangeName.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangePhone = this.onChangePhone.bind(this);
+
     this.saveClient = this.saveClient.bind(this);
     this.newClient = this.newClient.bind(this);
 
@@ -13,7 +15,7 @@ export default class AddClient extends Component {
       id: null,
       name: "",
       email: "", 
-      published: false,
+      phone: "", 
 
       submitted: false
     };
@@ -30,11 +32,18 @@ export default class AddClient extends Component {
       email: e.target.value
     });
   }
+  onChangePhone(e) {
+    this.setState({
+      phone: e.target.value
+    });
+  }
 
   saveClient() {
     var data = {
       name: this.state.name,
-      email: this.state.email
+      email: this.state.email,
+      phone: this.state.phone
+
     };
 
     ClientDataService.create(data)
@@ -43,7 +52,7 @@ export default class AddClient extends Component {
           id: response.data.id,
           name: response.data.name,
           email: response.data.email,
-          published: response.data.published,
+          phone: response.data.phone,
 
           submitted: true
         });
@@ -59,8 +68,7 @@ export default class AddClient extends Component {
       id: null,
       name: "",
       email: "",
-      published: false,
-
+      phone: "",
       submitted: false
     });
   }
@@ -100,6 +108,18 @@ export default class AddClient extends Component {
                 value={this.state.email}
                 onChange={this.onChangeEmail}
                 name="email"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="phone">Email</label>
+              <input
+                type="text"
+                className="form-control"
+                id="phone"
+                required
+                value={this.state.phone}
+                onChange={this.onChangePhone}
+                name="phone"
               />
             </div>
 

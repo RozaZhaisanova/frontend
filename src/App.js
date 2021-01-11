@@ -1,4 +1,4 @@
-//import logo from './logo.svg';
+import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,7 +17,7 @@ class App extends Component {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <a href="/clients" className="navbar-brand">
-            bezKoder
+            Netcracker
           </a>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">

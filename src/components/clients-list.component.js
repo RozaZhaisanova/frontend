@@ -152,11 +152,11 @@ export default class ClientsList extends Component {
               </div>
               <div>
                 <label>
-                  <strong>Status:</strong>
+                  <strong>Phone:</strong>
                 </label>{" "}
-                {currentClient.published ? "Published" : "Pending"}
+                {currentClient.phone}
               </div>
-
+             
               <Link
                 to={"/clients/" + currentClient.id}
                 className="badge badge-warning"

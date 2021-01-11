@@ -6,8 +6,9 @@ export default class Client extends Component {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangePhone = this.onChangePhone.bind(this);
+
     this.getClient = this.getClient.bind(this);
-    this.updatePublished = this.updatePublished.bind(this);
     this.updateClient = this.updateClient.bind(this);
     this.deleteClient = this.deleteClient.bind(this);
 
@@ -16,7 +17,7 @@ export default class Client extends Component {
         id: null,
         title: "",
         description: "",
-        published: false
+        phone: ""
       },
       message: ""
     };
@@ -49,6 +50,16 @@ export default class Client extends Component {
       }
     }));
   }
+  onChangePhone(e) {
+    const phone = e.target.value;
+    
+    this.setState(prevState => ({
+      currentClient: {
+        ...prevState.currentClient,
+        phone: phone
+      }
+    }));
+  }
 
   getClient(id) {
     ClientDataService.get(id)
@@ -63,28 +74,6 @@ export default class Client extends Component {
       });
   }
 
-  updatePublished(status) {
-    var data = {
-      id: this.state.currentClient.id,
-      title: this.state.currentClient.title,
-      description: this.state.currentClient.description,
-      published: status
-    };
-
-    ClientDataService.update(this.state.currentClient.id, data)
-      .then(response => {
-        this.setState(prevState => ({
-          currentClient: {
-            ...prevState.currentClient,
-            published: status
-          }
-        }));
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
 
   updateClient() {
     ClientDataService.update(
@@ -106,7 +95,7 @@ export default class Client extends Component {
     ClientDataService.delete(this.state.currentClient.id)
       .then(response => {
         console.log(response.data);
-        this.props.history.push('/tutorials')
+        this.props.history.push('/clients')
       })
       .catch(e => {
         console.log(e);
@@ -141,30 +130,22 @@ export default class Client extends Component {
                   onChange={this.onChangeEmail}
                 />
               </div>
-
               <div className="form-group">
-                <label>
-                  <strong>Status:</strong>
-                </label>
-                {currentClient.published ? "Published" : "Pending"}
+                <label htmlFor="phone">Phone</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="phone"
+                  value={currentClient.phone}
+                  onChange={this.onChangePhone}
+                />
               </div>
+
+
+           
             </form>
 
-            {currentClient.published ? (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(false)}
-              >
-                UnPublish
-              </button>
-            ) : (
-              <button
-                className="badge badge-primary mr-2"
-                onClick={() => this.updatePublished(true)}
-              >
-                Publish
-              </button>
-            )}
+   
 
             <button
               className="badge badge-danger mr-2"
